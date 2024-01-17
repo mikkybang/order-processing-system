@@ -7,6 +7,7 @@ export async function up(knex: Knex) {
     // this creates an "id" column that gets autoincremented
     table.increments();
 
+    table.string('name').notNullable();
     table
       .dateTime('created_at')
       .notNullable()
