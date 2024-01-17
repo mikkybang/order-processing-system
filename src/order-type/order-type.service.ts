@@ -1,26 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateOrderTypeDto } from './dto/create-order-type.dto';
 import { UpdateOrderTypeDto } from './dto/update-order-type.dto';
+import { OrderTypeModel } from './models/order-type.model';
+import { ModelClass } from 'objection';
 
 @Injectable()
 export class OrderTypeService {
+  constructor(
+    @Inject("OrderTypeModel") private readonly orderTypeModel: ModelClass<OrderTypeModel>
+  ) { }
   create(createOrderTypeDto: CreateOrderTypeDto) {
-    return 'This action adds a new orderType';
+    return this.orderTypeModel.query().insert(createOrderTypeDto).returning('*');
   }
 
   findAll() {
-    return `This action returns all orderType`;
+    return this.orderTypeModel.query();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} orderType`;
+    return this.orderTypeModel.query().findById(id);
   }
 
   update(id: number, updateOrderTypeDto: UpdateOrderTypeDto) {
-    return `This action updates a #${id} orderType`;
+    return this.orderTypeModel.query().patchAndFetchById(id, updateOrderTypeDto).returning('*');
   }
 
   remove(id: number) {
-    return `This action removes a #${id} orderType`;
+    return this.orderTypeModel.query().deleteById(id).returning('*');
   }
 }
