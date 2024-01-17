@@ -6,10 +6,10 @@ export class MealModel extends BaseModel {
 
   readonly id: number;
   name: string;
-  brand_id: number;
+  brandId: number;
   active: boolean;
   amount: number;
   images: Record<string, any>;
-  item_type: string;
+  itemType: string;
 }
 
