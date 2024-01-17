@@ -11,6 +11,7 @@ import { OrderModule } from './order/order.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { LoggerMiddleware } from './common/middleware/GlobalLoggerMiddleware';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { LoggerMiddleware } from './common/middleware/GlobalLoggerMiddleware';
       isGlobal: true,
       load: [configuration],
     }),
+    DatabaseModule
   ],
   controllers: [AppController],
   providers: [AppService],
