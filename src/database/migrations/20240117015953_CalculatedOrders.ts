@@ -20,14 +20,8 @@ export async function up(knex: Knex) {
     table.string('cokitchen_id');
     table.boolean('pickup').notNullable();
     table.decimal('prev_price', 14, 2);
-    table
-      .dateTime('created_at')
-      .notNullable()
-      .defaultTo(knex.raw('CURRENT_TIMESTAMP'));
-    table
-      .dateTime('updated_at')
-      .notNullable()
-      .defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+
+    table.timestamps();
   });
 }
 
