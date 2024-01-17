@@ -1,26 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateAddonDto } from './dto/create-addon.dto';
 import { UpdateAddonDto } from './dto/update-addon.dto';
+import { ModelClass } from 'objection';
+import { AddonModel } from './models/addon.model';
 
 @Injectable()
 export class AddonService {
+  constructor(
+    @Inject('AddonModel') private readonly addonModel: ModelClass<AddonModel>,
+  ) { }
+
   create(createAddonDto: CreateAddonDto) {
-    return 'This action adds a new addon';
+    return this.addonModel.query().insert(createAddonDto).returning('*');
   }
 
   findAll() {
-    return `This action returns all addon`;
+    return this.addonModel.query();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} addon`;
+    return this.addonModel.query().findById(id);
   }
 
   update(id: number, updateAddonDto: UpdateAddonDto) {
-    return `This action updates a #${id} addon`;
+    return this.addonModel.query().patchAndFetchById(id, updateAddonDto).returning('*');
   }
 
   remove(id: number) {
-    return `This action removes a #${id} addon`;
+    return this.addonModel.query().deleteById(id).returning('*').first();
   }
 }
