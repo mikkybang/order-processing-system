@@ -1,26 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateMealDto } from './dto/create-meal.dto';
 import { UpdateMealDto } from './dto/update-meal.dto';
+import { ModelClass } from 'objection';
+import { MealModel } from './models/meal.model';
 
 @Injectable()
 export class MealService {
+  constructor(
+    @Inject("MealModel") private readonly mealModel: ModelClass<MealModel>
+  ) { }
+
+
   create(createMealDto: CreateMealDto) {
-    return 'This action adds a new meal';
+    return this.mealModel.query().insert(createMealDto).returning('*');
   }
 
   findAll() {
-    return `This action returns all meal`;
+    return this.mealModel.query();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} meal`;
+    return this.mealModel.query().findById(id);
   }
 
   update(id: number, updateMealDto: UpdateMealDto) {
-    return `This action updates a #${id} meal`;
+    return this.mealModel.query().patchAndFetchById(id, updateMealDto).returning('*');
   }
 
   remove(id: number) {
-    return `This action removes a #${id} meal`;
+    return this.mealModel.query().deleteById(id).returning('*');
   }
 }
