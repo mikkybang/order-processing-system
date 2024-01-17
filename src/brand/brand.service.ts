@@ -1,26 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
+import { ModelClass } from 'objection';
+import { BrandModel } from './models/brand.model';
 
 @Injectable()
 export class BrandService {
+  constructor(
+    @Inject('BrandModel') private readonly brandModel: ModelClass<BrandModel>,
+  ) { }
   create(createBrandDto: CreateBrandDto) {
-    return 'This action adds a new brand';
+    return this.brandModel.query().insert(createBrandDto);
   }
 
   findAll() {
-    return `This action returns all brand`;
+    return this.brandModel.query();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} brand`;
+    return this.brandModel.query().findById(id);
   }
 
   update(id: number, updateBrandDto: UpdateBrandDto) {
-    return `This action updates a #${id} brand`;
+    return this.brandModel.query().patchAndFetchById(id, updateBrandDto).returning('*');
   }
 
   remove(id: number) {
-    return `This action removes a #${id} brand`;
+    return this.brandModel.query().deleteById(id).returning('*').first();
   }
 }
