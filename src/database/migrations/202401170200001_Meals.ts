@@ -7,7 +7,7 @@ export async function up(knex: Knex) {
     // this creates an "id" column that gets autoincremented
     table.increments();
     table.string('name').notNullable();
-    table.string('brand_id').references('id').inTable('brands');
+    table.integer('brand_id').references('id').inTable('brands');
     table.boolean('active').notNullable();
     table.decimal('amount', 14, 2);
     table.jsonb('images');

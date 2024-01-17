@@ -21,7 +21,7 @@ export async function up(knex: Knex) {
     table.boolean('paid').notNullable();
     table.string('order_code').notNullable();
     table.string('order_change').notNullable();
-    table.string('calculated_order_id').notNullable();
+    table.string('calculated_order_id').nullable();
     table.dateTime('kitchen_verified_time').nullable();
     table.dateTime('kitchen_completed_time').nullable();
     table.boolean('shop_accepted').notNullable();

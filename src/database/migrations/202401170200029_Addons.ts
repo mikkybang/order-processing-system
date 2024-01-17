@@ -7,7 +7,7 @@ export async function up(knex: Knex) {
     // this creates an "id" column that gets autoincremented
     table.increments();
     table.decimal('amount', 14, 2).notNullable();
-    table.string('meal_id').references('id').inTable('meals'); // Foreign key to the Meal table
+    table.integer('meal_id').references('id').inTable('meals'); // Foreign key to the Meal table
     table.jsonb('meal_data');
 
     table.timestamps();

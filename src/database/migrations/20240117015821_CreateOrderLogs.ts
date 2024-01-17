@@ -6,7 +6,7 @@ export async function up(knex: Knex) {
   return knex.schema.createTable(tableName, (table) => {
     // this creates an "id" column that gets autoincremented
     table.increments();
-    table.string('order_id').notNullable().references('id').inTable('orders');
+    table.integer('order_id').notNullable().references('id').inTable('orders');
 
     table.timestamp('time').notNullable();
     table.string('description', 255).notNullable();
