@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 
-const tableName = '';
+const tableName = 'addons';
 
 export async function up(knex: Knex) {
   return knex.schema.createTable(tableName, (table) => {
@@ -21,4 +21,3 @@ export async function up(knex: Knex) {
 export async function down(knex: Knex) {
   return knex.schema.dropTable(tableName);
 }
-
