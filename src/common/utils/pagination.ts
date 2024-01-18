@@ -1,12 +1,16 @@
 import { QueryBuilder, Model } from "objection";
 
-interface PaginationResponse<T> {
+export interface PaginationResponse<T> {
   items: T[];
   total: number;
   page: number;
   limit: number;
 }
 
+export interface IPaginationOptions {
+  page?: number;
+  limit?: number;
+}
 
 export async function paginate<T>(
   query: QueryBuilder<Model, T[]>,
