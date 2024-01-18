@@ -3,6 +3,7 @@ import { CreateAddonDto } from './dto/create-addon.dto';
 import { UpdateAddonDto } from './dto/update-addon.dto';
 import { ModelClass } from 'objection';
 import { AddonModel } from './models/addon.model';
+import { IPaginationOptions, paginate } from 'src/common/utils/pagination';
 
 @Injectable()
 export class AddonService {
@@ -14,8 +15,8 @@ export class AddonService {
     return this.addonModel.query().insert(createAddonDto).returning('*');
   }
 
-  findAll() {
-    return this.addonModel.query();
+  findAll(query: IPaginationOptions) {
+    return paginate(this.addonModel.query(), query.page, query.limit);
   }
 
   findOne(id: number) {

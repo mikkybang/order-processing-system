@@ -2,10 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { AddonService } from './addon.service';
 import { CreateAddonDto } from './dto/create-addon.dto';
 import { UpdateAddonDto } from './dto/update-addon.dto';
+import { GetQuery } from 'src/common/decorators/query.decorator';
+import { IPaginationOptions } from 'src/common/utils/pagination';
 
 @Controller('addon')
 export class AddonController {
-  constructor(private readonly addonService: AddonService) {}
+  constructor(private readonly addonService: AddonService) { }
 
   @Post()
   create(@Body() createAddonDto: CreateAddonDto) {
@@ -13,8 +15,8 @@ export class AddonController {
   }
 
   @Get()
-  findAll() {
-    return this.addonService.findAll();
+  findAll(@GetQuery() query: IPaginationOptions) {
+    return this.addonService.findAll(query);
   }
 
   @Get(':id')
