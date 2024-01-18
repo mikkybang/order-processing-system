@@ -3,6 +3,7 @@ import { CreateMealDto } from './dto/create-meal.dto';
 import { UpdateMealDto } from './dto/update-meal.dto';
 import { ModelClass } from 'objection';
 import { MealModel } from './models/meal.model';
+import { IPaginationOptions, paginate } from 'src/common/utils/pagination';
 
 @Injectable()
 export class MealService {
@@ -15,8 +16,8 @@ export class MealService {
     return this.mealModel.query().insert(createMealDto).returning('*');
   }
 
-  findAll() {
-    return this.mealModel.query();
+  findAll(query: IPaginationOptions) {
+    return paginate(this.mealModel.query(), query.page, query.limit);
   }
 
   findOne(id: number) {

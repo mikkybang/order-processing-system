@@ -2,10 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MealService } from './meal.service';
 import { CreateMealDto } from './dto/create-meal.dto';
 import { UpdateMealDto } from './dto/update-meal.dto';
+import { GetQuery } from 'src/common/decorators/query.decorator';
+import { IPaginationOptions } from 'src/common/utils/pagination';
 
 @Controller('meal')
 export class MealController {
-  constructor(private readonly mealService: MealService) {}
+  constructor(private readonly mealService: MealService) { }
 
   @Post()
   create(@Body() createMealDto: CreateMealDto) {
@@ -13,8 +15,8 @@ export class MealController {
   }
 
   @Get()
-  findAll() {
-    return this.mealService.findAll();
+  findAll(@GetQuery() query: IPaginationOptions) {
+    return this.mealService.findAll(query);
   }
 
   @Get(':id')
