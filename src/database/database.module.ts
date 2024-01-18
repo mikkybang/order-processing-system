@@ -11,13 +11,20 @@ import { OrderLogModel } from 'src/order-log/models/order-log.model';
 import { OrderTypeModel } from 'src/order-type/models/order-type.model';
 import { OrderModel } from 'src/order/models/order.model';
 
+const models = [
+  OrderModel,
+  OrderTypeModel,
+  OrderLogModel,
+  AddonModel,
+  BrandModel,
+  CalculatedOrderModel,
+  MealModel,
+];
 
-const models = [OrderModel, OrderTypeModel, OrderLogModel, AddonModel, BrandModel, CalculatedOrderModel, MealModel,];
-
-const modelProviders = models.map(model => {
+const modelProviders = models.map((model) => {
   return {
     provide: model.name,
-    useValue: model
+    useValue: model,
   };
 });
 
@@ -38,19 +45,20 @@ const providers = [
             ? { rejectUnauthorized: false }
             : false,
         },
-        ...knexSnakeCaseMappers()
+        ...knexSnakeCaseMappers(),
       });
 
       Model.knex(knex);
       return knex;
-    }
-  }
+    },
+    inject: [ConfigService],
+  },
 ];
 
 @Global()
 @Module({
   imports: [ConfigModule],
   providers: [...providers],
-  exports: [...providers]
+  exports: [...providers],
 })
 export class DatabaseModule { }
