@@ -1,4 +1,6 @@
+import { CalculatedOrderModel } from 'src/calculated-order/models/calculated-order.model';
 import { BaseModel } from '../../database/models/base.model'
+import { Model } from 'objection';
 
 
 export class OrderModel extends BaseModel {
@@ -41,5 +43,18 @@ export class OrderModel extends BaseModel {
   scheduledDeliveryDate: Date;
   scheduledDeliveryTime: Date;
   isHidden: boolean;
+
+  calculatedOrder: CalculatedOrderModel;
+
+  static relationMappings = {
+    calculatedOrder: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: CalculatedOrderModel, // Adjust the path as needed
+      join: {
+        from: 'orders.calculated_order_id',
+        to: 'calculated_orders.id'
+      }
+    }
+  };
 
 }
