@@ -2,10 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
+import { GetQuery } from 'src/common/decorators/query.decorator';
+import { IPaginationOptions } from 'src/common/utils/pagination';
 
 @Controller('brand')
 export class BrandController {
-  constructor(private readonly brandService: BrandService) {}
+  constructor(private readonly brandService: BrandService) { }
 
   @Post()
   create(@Body() createBrandDto: CreateBrandDto) {
@@ -13,8 +15,8 @@ export class BrandController {
   }
 
   @Get()
-  findAll() {
-    return this.brandService.findAll();
+  findAll(@GetQuery() query: IPaginationOptions) {
+    return this.brandService.findAll(query);
   }
 
   @Get(':id')
