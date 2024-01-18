@@ -13,6 +13,7 @@ export async function up(knex: Knex) {
     table.integer('internal_profit').notNullable().defaultTo(0);
     table.string('min_selection_no').notNullable().defaultTo('0');
     table.string('meal_addon_category_id').notNullable();
+    table.jsonb('posist_data').defaultTo({});
 
     table.timestamps();
   });

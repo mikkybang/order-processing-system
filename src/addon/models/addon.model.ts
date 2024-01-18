@@ -14,4 +14,5 @@ export class AddonModel extends BaseModel {
   internalProfit: number;
   minSelectionNo: string;
   mealAddonCategoryId: string;
+  postistData: Record<string, any>;
 }
