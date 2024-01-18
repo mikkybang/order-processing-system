@@ -1,5 +1,7 @@
 
+import { BrandModel } from 'src/brand/models/brand.model';
 import { BaseModel } from '../../database/models/base.model';
+import { Model } from 'objection';
 
 export class MealModel extends BaseModel {
   static tableName = 'meals';
@@ -11,5 +13,15 @@ export class MealModel extends BaseModel {
   amount: number;
   images: Record<string, any>;
   itemType: string;
-}
 
+  static relationMappings = {
+    brand: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: BrandModel, // Adjust the path as needed
+      join: {
+        from: 'meals.brand_id',
+        to: 'brands.id'
+      }
+    }
+  };
+}
