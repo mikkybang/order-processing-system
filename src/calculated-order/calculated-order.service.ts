@@ -3,6 +3,7 @@ import { CreateCalculatedOrderDto } from './dto/create-calculated-order.dto';
 import { UpdateCalculatedOrderDto } from './dto/update-calculated-order.dto';
 import { CalculatedOrderModel } from './models/calculated-order.model';
 import { ModelClass } from 'objection';
+import { paginate, IPaginationOptions } from 'src/common/utils/pagination';
 
 @Injectable()
 export class CalculatedOrderService {
@@ -13,8 +14,8 @@ export class CalculatedOrderService {
     return this.calculatedOrderModel.query().insert(createCalculatedOrderDto).returning('*');
   }
 
-  findAll() {
-    return this.calculatedOrderModel.query();
+  findAll(query: IPaginationOptions) {
+    return paginate(this.calculatedOrderModel.query(), query.page, query.limit);
   }
 
   findOne(id: number) {

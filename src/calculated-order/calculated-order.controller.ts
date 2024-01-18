@@ -2,10 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CalculatedOrderService } from './calculated-order.service';
 import { CreateCalculatedOrderDto } from './dto/create-calculated-order.dto';
 import { UpdateCalculatedOrderDto } from './dto/update-calculated-order.dto';
+import { GetQuery } from 'src/common/decorators/query.decorator';
+import { IPaginationOptions } from 'src/common/utils/pagination';
 
 @Controller('calculated-order')
 export class CalculatedOrderController {
-  constructor(private readonly calculatedOrderService: CalculatedOrderService) {}
+  constructor(private readonly calculatedOrderService: CalculatedOrderService) { }
 
   @Post()
   create(@Body() createCalculatedOrderDto: CreateCalculatedOrderDto) {
@@ -13,8 +15,8 @@ export class CalculatedOrderController {
   }
 
   @Get()
-  findAll() {
-    return this.calculatedOrderService.findAll();
+  findAll(@GetQuery() query: IPaginationOptions) {
+    return this.calculatedOrderService.findAll(query);
   }
 
   @Get(':id')
