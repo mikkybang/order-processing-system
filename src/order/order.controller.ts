@@ -2,10 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { GetQuery } from 'src/common/decorators/query.decorator';
+import { IPaginationOptions } from 'src/common/utils/pagination';
 
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
@@ -13,8 +15,8 @@ export class OrderController {
   }
 
   @Get()
-  findAll() {
-    return this.orderService.findAll();
+  findAll(@GetQuery() query: IPaginationOptions) {
+    return this.orderService.findAll(query);
   }
 
   @Get(':id')

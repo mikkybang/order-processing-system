@@ -3,6 +3,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderModel } from './models/order.model';
 import { ModelClass } from 'objection';
+import { IPaginationOptions, paginate } from 'src/common/utils/pagination';
 
 @Injectable()
 export class OrderService {
@@ -13,8 +14,8 @@ export class OrderService {
     return this.orderModel.query().insert(createOrderDto).returning('*');
   }
 
-  findAll() {
-    return this.orderModel.query();
+  findAll(query: IPaginationOptions) {
+    return paginate(this.orderModel.query(), query.page, query.limit)
   }
 
   findOne(id: number) {
