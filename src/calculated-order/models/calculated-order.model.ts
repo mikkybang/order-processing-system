@@ -1,4 +1,3 @@
-
 import { BaseModel } from '../../database/models/base.model';
 
 export class CalculatedOrderModel extends BaseModel {
@@ -19,4 +18,3 @@ export class CalculatedOrderModel extends BaseModel {
   pickup: boolean;
   prevPrice: number;
 }
-

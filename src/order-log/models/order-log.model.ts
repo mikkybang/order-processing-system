@@ -8,4 +8,3 @@ export class OrderLogModel extends BaseModel {
   time: Date;
   description: string;
 }
-

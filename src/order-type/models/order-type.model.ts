@@ -6,5 +6,3 @@ export class OrderTypeModel extends BaseModel {
   readonly id: number;
   name: string;
 }
-
-

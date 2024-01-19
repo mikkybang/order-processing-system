@@ -18,7 +18,7 @@ export async function up(knex: Knex) {
     table.string('cokitchen_polygon_id');
     table.string('user_id');
     table.string('cokitchen_id');
-    table.boolean('pickup').notNullable();
+    table.boolean('pickup').notNullable().defaultTo(false);
     table.decimal('prev_price', 14, 2);
 
     table.timestamps();
