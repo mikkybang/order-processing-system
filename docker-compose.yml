@@ -1,0 +1,36 @@
+
+version: '3'
+
+services:
+  app:
+    container_name: nodejs-app
+    build: .
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_NAME=order_processing
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  db:
+    container_name: postgres-db
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: order_processing
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
